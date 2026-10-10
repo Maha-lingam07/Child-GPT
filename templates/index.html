@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6D8196">
+  <title>Child-GPT</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Paw-sitive Chat home">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>Child <strong>GPT</strong></span>
+      </a>
+      <div class="header-actions">
+        <span class="safe-badge"><span class="status-dot"></span> A friendly space to wonder</span>
+        <button id="reset-button" class="reset-button" type="button" title="Clear this chat">↻ <span>Reset</span></button>
+      </div>
+    </header>
+
+    <section class="chat-card" aria-label="Chat with your friendly helper">
+      <div class="chat-heading">
+        <div>
+          <p class="eyebrow">YOUR CURIOUS COMPANION</p>
+          <h1>Ask Anything, <span>I’ll answer.</span></h1>
+          <p class="subtitle">What you have in your mind today?</p>
+        </div>
+        <div class="dog-stage" aria-live="polite">
+          <img id="dog-image" src="{{ url_for('static', filename='Welcome.png') }}" alt="Your dog helper is ready to chat">
+          <span id="dog-caption">Ready to chat!</span>
+        </div>
+      </div>
+
+      <div id="messages" class="messages" role="log" aria-live="polite" aria-relevant="additions text">
+        <article class="message assistant-message welcome-message">
+          <div class="avatar" aria-hidden="true">🐶</div>
+          <div class="bubble"><p>Hi there! I’m your friendly chat helper. What would you like to learn about today?</p></div>
+        </article>
+      </div>
+
+      <form id="chat-form" class="composer">
+        <label class="sr-only" for="question">Your question</label>
+        <textarea id="question" name="question" rows="1" maxlength="2000" placeholder="Ask me anything..." autocomplete="off" required></textarea>
+        <button id="send-button" type="submit" aria-label="Send your question"><span>Send</span><span aria-hidden="true">➤</span></button>
+      </form>
+      <p class="hint">Made for curious minds <span aria-hidden="true">✦</span> Ask a grown-up if something feels confusing.</p>
+    </section>
+    <footer>Kind answers, one question at a time <span aria-hidden="true">♥</span></footer>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>

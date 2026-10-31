@@ -10,6 +10,24 @@ from chatbot import answer_question
 app = Flask(__name__)
 
 
+def _friendly_chat_error(exc: Exception) -> str:
+    """Explain common Gemini setup failures without returning raw provider details."""
+    if isinstance(exc, RuntimeError):
+        return str(exc)
+
+    detail = str(exc).lower()
+    if any(term in detail for term in ("api key not valid", "api_key_invalid", "invalid api key", "unauthenticated", "401")):
+        return (
+            "Google rejected the API key. Check that GOOGLE_API_KEY is set as a Hugging Face Space Secret, "
+            "with no quotes or extra spaces, then restart the Space."
+        )
+    if any(term in detail for term in ("resource_exhausted", "quota", "rate limit", "429")):
+        return "Google reports that the API quota or rate limit was reached. Check your Google AI Studio project and try again later."
+    if any(term in detail for term in ("not found", "model", "404")):
+        return "The configured Gemini model is unavailable to this API project. Check the Space Logs for the model error."
+    return "The chatbot server hit an error. Open the Hugging Face Space Logs for details and confirm GOOGLE_API_KEY is set as a Space Secret."
+
+
 @app.get("/")
 def index():
     return render_template("index.html")
@@ -28,8 +46,7 @@ def chat():
         return jsonify(answer=answer)
     except Exception as exc:
         app.logger.exception("Chat request failed")
-        message = str(exc) if isinstance(exc, RuntimeError) else "I couldn’t reach my answer helper just now. Please try again."
-        return jsonify(error=message), 500
+        return jsonify(error=_friendly_chat_error(exc)), 500
 
 
 if __name__ == "__main__":

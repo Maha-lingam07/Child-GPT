@@ -1,68 +1,27 @@
-# Child-GPT
+---
+title: Child GPT
+emoji: 🐶
+colorFrom: blue
+colorTo: yellow
+sdk: docker
+app_port: 7860
+---
 
-A web-based conversational assistant powered by a multi-agent Gemini pipeline, designed to provide safe, engaging, and age-appropriate interactions for children.
+# Child GPT
 
-## Overview
+A child-friendly web chatbot powered by Google ADK and Gemini. It drafts, reviews, and refines answers for a warm, simple, child-appropriate tone. The web interface includes a dog companion, chat reset, and optional speech-to-text input.
 
-Child-GPT implements a structured, multi-step pipeline (`chatbot.py`) adapted from `Chatbot_for_Children.ipynb`. Every user message passes through an automated review loop before reaching the user:
+## Run locally
 
-1. **Draft Generation**: Formulates an engaging, child-friendly response to the user's query.
-2. **Safety Review**: Evaluates the drafted response against age-appropriateness guidelines, content safety boundaries, and tone considerations.
-3. **Refinement Loop**: Adjusts and polished the content based on safety feedback to ensure high quality and security before display.
+1. Create and activate a virtual environment.
+2. Install packages: `pip install -r requirements.txt`.
+3. Copy `.env.example` to `.env` and set `GOOGLE_API_KEY` to your Google AI Studio API key.
+4. Start the app with `python app.py` and visit `http://127.0.0.1:7860`.
 
-## Key Features
+Keep `.env` private. It is excluded from Git by `.gitignore`.
 
-* **Multi-Agent Architecture**: Automated drafting, reviewing, and refining stages to maintain safe boundaries.
-* **Child-Centric Guardrails**: Prevents exposure to sensitive topics while maintaining an encouraging, educational tone.
-* **Interactive Web Interface**: A clean Flask web application for real-time interaction.
+## Deploy to Hugging Face Spaces
 
-## Getting Started
+Create a Docker Space and push this repository to it. In the Space's **Settings → Variables and secrets → Secrets**, add `GOOGLE_API_KEY`. The app reads the key from the runtime environment; never upload `.env` or put the key in the Dockerfile.
 
-### Prerequisites
-
-* Python 3.8 or higher
-* A Google AI Studio API Key (`GOOGLE_API_KEY`)
-
-### Local Installation & Setup
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Maha-lingam07/Child-GPT.git
-   cd Child-GPT
-   ```
-
-2. **Create and activate a virtual environment**:
-   * **Windows (cmd):**
-     ```cmd
-     python -m venv venv
-     venv\Scripts\activate
-     ```
-   * **macOS/Linux:**
-     ```bash
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Set your API Key**:
-   * **Windows (cmd):**
-     ```cmd
-     set GOOGLE_API_KEY="your_api_key_here"
-     ```
-   * **macOS/Linux:**
-     ```bash
-     export GOOGLE_API_KEY="your_api_key_here"
-     ```
-
-5. **Run the Application**:
-   ```bash
-   python app.py
-   ```
-
-6. Open your browser and navigate to `http://127.0.0.1:5000`.
-
-> **Security Note:** Never commit your `GOOGLE_API_KEY` or `.env` files to source control.
+Speech recognition needs browser support and microphone permission. It works on secure HTTPS deployments such as Hugging Face Spaces; Chrome and Edge support the browser speech API used here.

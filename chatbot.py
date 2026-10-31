@@ -1,9 +1,15 @@
 """Child-friendly answer generation using the agents from the notebook."""
 
 import os
-os.environ["GOOGLE_API_KEY"] = "I4L3U2F1r2e3e4k5e6y7N8i9c0k1y"
-# ofc above is not a valid apikey, get api key from Google AI studio
+from pathlib import Path
 from functools import lru_cache
+
+from dotenv import load_dotenv
+
+
+# Load a developer's local key without committing it. Hugging Face injects
+# GOOGLE_API_KEY as a runtime secret, which takes precedence over this file.
+load_dotenv(Path(__file__).resolve().with_name(".env"), override=False)
 
 
 @lru_cache(maxsize=1)

@@ -43,8 +43,12 @@
       <form id="chat-form" class="composer">
         <label class="sr-only" for="question">Your question</label>
         <textarea id="question" name="question" rows="1" maxlength="2000" placeholder="Ask me anything..." autocomplete="off" required></textarea>
+        <button id="mic-button" class="mic-button" type="button" aria-label="Speak your question" title="Speak your question">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v4m-4 0h8"/></svg>
+        </button>
         <button id="send-button" type="submit" aria-label="Send your question"><span>Send</span><span aria-hidden="true">➤</span></button>
       </form>
+      <p id="speech-status" class="speech-status" aria-live="polite"></p>
       <p class="hint">Made for curious minds <span aria-hidden="true">✦</span> Ask a grown-up if something feels confusing.</p>
     </section>
     <footer>Kind answers, one question at a time <span aria-hidden="true">♥</span></footer>

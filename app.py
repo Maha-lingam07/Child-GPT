@@ -18,14 +18,14 @@ def _friendly_chat_error(exc: Exception) -> str:
     detail = str(exc).lower()
     if any(term in detail for term in ("api key not valid", "api_key_invalid", "invalid api key", "unauthenticated", "401")):
         return (
-            "Google rejected the API key. Check that GOOGLE_API_KEY is set as a Hugging Face Space Secret, "
-            "with no quotes or extra spaces, then restart the Space."
+            "Google rejected the API key. Check that GOOGLE_API_KEY is set in the Render service environment, "
+            "with no quotes or extra spaces, then restart the service."
         )
     if any(term in detail for term in ("resource_exhausted", "quota", "rate limit", "429")):
         return "Google reports that the API quota or rate limit was reached. Check your Google AI Studio project and try again later."
     if any(term in detail for term in ("not found", "model", "404")):
-        return "The configured Gemini model is unavailable to this API project. Check the Space Logs for the model error."
-    return "The chatbot server hit an error. Open the Hugging Face Space Logs for details and confirm GOOGLE_API_KEY is set as a Space Secret."
+        return "The configured Gemini model is unavailable to this API project. Check the Render service logs for details."
+    return "The chatbot server hit an error. Check the Render service logs and confirm GOOGLE_API_KEY is set in the service environment."
 
 
 @app.get("/")

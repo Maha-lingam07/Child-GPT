@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: child-gpt
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --workers 1 --threads 4 --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false

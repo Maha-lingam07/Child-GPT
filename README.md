@@ -1,15 +1,6 @@
----
-title: Child GPT
-emoji: 🐶
-colorFrom: blue
-colorTo: yellow
-sdk: docker
-app_port: 7860
----
-
 # Child GPT
 
-A child-friendly web chatbot powered by Google ADK and Gemini. It drafts, reviews, and refines answers for a warm, simple, child-appropriate tone. The web interface includes a dog companion, chat reset, and optional speech-to-text input.
+A child-friendly web chatbot powered by Google ADK and Gemini 3.5 Flash-Lite. It drafts, reviews, and refines answers for a warm, simple, child-appropriate tone. The web interface includes a dog companion, chat reset, and optional browser speech-to-text.
 
 ## Run locally
 
@@ -20,8 +11,10 @@ A child-friendly web chatbot powered by Google ADK and Gemini. It drafts, review
 
 Keep `.env` private. It is excluded from Git by `.gitignore`.
 
-## Deploy to Hugging Face Spaces
+## Deploy to Render
 
-Create a Docker Space and push this repository to it. In the Space's **Settings → Variables and secrets → Secrets**, add `GOOGLE_API_KEY`. The app reads the key from the runtime environment; never upload `.env` or put the key in the Dockerfile.
+The repository includes a `render.yaml` Blueprint. In Render, choose **New → Blueprint**, connect this GitHub repository, and provide your Google API key when prompted for `GOOGLE_API_KEY`. Render will build the Python service and deploy it. Do not commit or upload `.env`.
 
-Speech recognition needs browser support and microphone permission. It works on secure HTTPS deployments such as Hugging Face Spaces; Chrome and Edge support the browser speech API used here.
+The microphone feature requires browser speech recognition support and microphone permission. It works over HTTPS in browsers that provide the Web Speech API, such as Chrome and Edge.
+
+Render's free web services sleep after 15 minutes without traffic, so the first request after a pause may take about a minute to start. Gemini API quotas and billing are separate from Render hosting.
